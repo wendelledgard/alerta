@@ -1,0 +1,212 @@
+{% load staticfiles %}
+      <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="{% static 'alunos/css/materialize.min.css' %}"  media="screen,projection"/>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="{% static 'alunos/js/materialize.min.js' %}"></script>
+    <div class="container" style="padding-top: 20px">
+        <div class="row">
+            <div class="col s12">
+                <b>Selecionar por turma: </b><br>
+                <!-- Switch -->
+                  <div class="switch">
+                    <label>
+                      Desativado
+                      <input type="checkbox">
+                      <span class="lever"></span>
+                      Ativado
+                    </label>
+                  </div>
+            </div>
+        </div>
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">directions_run</i>Evadidos</div>
+          <div class="collapsible-body">
+
+              <table class="striped">
+                <tbody>
+                <theader>
+                    <tr>
+                        <td>
+                            Matrícula
+                        </td>
+                        <td>
+                            Ano Letivo
+                        </td>
+                        <td>
+                            Escola de Origem
+                        </td>
+                        <td>
+                            Enviar Alerta
+                        </td>
+                    </tr>
+                </theader>
+                {% for aluno in evadidos %}
+                  <tr>
+                    <td>
+                      {{aluno.Matricula}}
+                    </td>
+                    <td>
+                      {{aluno.Ano_letivo}}
+                    </td>
+                    <td>
+                      {{aluno.Tipo_Escola_Origem}}
+                    </td>
+                    <td>
+                        <a class="modal-trigger" href="#modal1"><i class="material-icons">mail</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">cancel</i>Reprovados</div>
+          <div class="collapsible-body">
+
+              <table class="striped">
+                <tbody>
+                <theader>
+                    <tr>
+                        <td>
+                            Matrícula
+                        </td>
+                        <td>
+                            Ano Letivo
+                        </td>
+                        <td>
+                            Escola de Origem
+                        </td>
+                        <td>
+                            Enviar Alerta
+                        </td>
+                    </tr>
+                </theader>
+                {% for aluno in reprovados %}
+                  <tr>
+                    <td>
+                      {{aluno.Matricula}}
+                    </td>
+                    <td>
+                      {{aluno.Ano_letivo}}
+                    </td>
+                    <td>
+                      {{aluno.Tipo_Escola_Origem}}
+                    </td>
+                    <td>
+                        <a class="modal-trigger" href="#modal1"><i class="material-icons">mail</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">assignment_turned_in</i>Aprovados</div>
+          <div class="collapsible-body">
+
+              <table class="striped">
+                <tbody>
+                <theader>
+                    <tr>
+                        <td>
+                            Matrícula
+                        </td>
+                        <td>
+                            Ano Letivo
+                        </td>
+                        <td>
+                            Escola de Origem
+                        </td>
+                        <td>
+                            Enviar Alerta
+                        </td>
+                    </tr>
+                </theader>
+                {% for aluno in aprovados %}
+                  <tr>
+                    <td>
+                      {{aluno.Matricula}}
+                    </td>
+                    <td>
+                      {{aluno.Ano_letivo}}
+                    </td>
+                    <td>
+                      {{aluno.Tipo_Escola_Origem}}
+                    </td>
+                    <td>
+                        <a class="modal-trigger" href="#modal1"><i class="material-icons">mail</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+              {% if aprovados.has_other_pages %}
+                  <ul class="pagination">
+                    {% if aprovados.has_previous %}
+                      <li><a href="?page={{ aprovados.previous_page_number }}">Prev &laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in aprovados.paginator.page_range %}
+                      {% if aprovados.number == i %}
+                        <li class="active"></li><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if alunos.has_next %}
+                      <li><a href="?page={{ aprovados.next_page_number }}">Next &raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                  </ul>
+              {% endif %}
+
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Enviar Alerta</h4>
+      <div class="row">
+        <form class="col s12">
+          <div class="input-field col s12">
+              <i class="material-icons prefix">add_alert</i>
+              <input id="icon_prefix" type="text" class="validate">
+              <label for="icon_prefix">Assunto</label>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" class="materialize-textarea"></textarea>
+              <label for="textarea1">Email</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="btn modal-action modal-close waves-effect waves-green btn-flat">Enviar</a>
+    </div>
+  </div>
+
+    <script>
+
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+        $('#textarea1').trigger('autoresize');
+      });
+    </script>
